@@ -82,13 +82,18 @@ const LoginPage = () => {
         setShowOtpDialog(false);
         setLoading(true);
         try {
+            // Re-login after OTP is verified
             const response = await api.post('/auth/login', { email, password });
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
-                setFailedAttempts(0); // Reset attempts on successful OTP login
-                navigate('/dashboard');
+                setFailedAttempts(0);
+                // Ensure token is stored before navigating
+                setTimeout(() => navigate('/dashboard'), 100);
+            } else {
+                setError('OTP verified, but failed to retrieve access token. Please try logging in again.');
             }
         } catch (err) {
+            console.error("Login after OTP error:", err);
             setError('Authentication failed after OTP verification.');
             setFailedAttempts(prev => prev + 1);
         } finally {
