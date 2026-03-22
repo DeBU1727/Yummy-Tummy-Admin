@@ -1,5 +1,0 @@
-{
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "yummy-tummy-admin-panel",
-  "pages_build_output_dir": "build"
-}
