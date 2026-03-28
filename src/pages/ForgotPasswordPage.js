@@ -52,11 +52,15 @@ const ForgotPasswordPage = () => {
     setError('');
 
     try {
+      // First verify if email exists in our system
+      await axios.post(`${API_BASE_URL}/api/auth/verify-email`, { email });
+      
+      // If email exists, proceed to send OTP
       await axios.post(`${API_BASE_URL}/api/auth/otp/send`, { email });
       showNotification('OTP sent to your email. Please check your inbox.', 'success');
       setStep(2);
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.response?.data || 'Failed to send OTP.';
+      const errorMessage = err.response?.data?.message || err.response?.data || 'Failed to process request.';
       setError(errorMessage);
       showNotification(errorMessage, 'error');
     } finally {

@@ -198,11 +198,14 @@ const DashboardPage = () => {
                 boxShadow: '0 20px 40px rgba(0,0,0,0.04)',
                 textAlign: 'center'
               }}>
-                <Typography variant="h6" sx={{ fontWeight: 800, mb: 4, textAlign: 'left' }}>Order Channels</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 800, mb: 4, textAlign: 'left' }}>Payment Methods</Typography>
                 <ResponsiveContainer width="100%" height="80%">
                   <PieChart>
                     <Pie
-                      data={sourceRatio}
+                      data={sourceRatio.map(item => ({
+                        ...item,
+                        source: item.source.replace('_', ' ')
+                      }))}
                       cx="50%" cy="50%"
                       innerRadius={80}
                       outerRadius={110}
